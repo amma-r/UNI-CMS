@@ -53,6 +53,7 @@ export default function Dashboard() {
               {
                 data: data.courses.map((c) => c.credits), // credits as values
                 label: "Credits",
+                //fix the error below by adding a type assertion to the color property
                 color: (theme) => theme.palette.primary.main, //unknown type for color, but this is how you can use theme colors
               },
             ]}

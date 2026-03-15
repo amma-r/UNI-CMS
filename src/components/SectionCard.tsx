@@ -3,16 +3,18 @@ import Box from "@mui/material/Box";
 import type { ReactNode } from "react";
 
 type SectionCardProps = {
+  width?: string | number;
   title: string;
   children: ReactNode;
 };
 
-export default function SectionCard({ title, children }: SectionCardProps) {
+export default function SectionCard({ width, title, children }: SectionCardProps) {
   return (
     <Paper
       elevation={2}
       sx={{
         p: 2,
+        width: width || "100%",
         borderRadius: 2,
         background: (theme) =>
           theme.palette.mode === "dark"
