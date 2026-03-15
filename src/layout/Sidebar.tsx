@@ -60,6 +60,7 @@ export default function Sidebar({
   const [userProfile, setUserProfile] = useState<{
     name: string;
     role: string;
+    avatarUrl?: string;
   } | null>(null);
 
   useEffect(() => {
@@ -85,11 +86,19 @@ export default function Sidebar({
       >
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <Avatar sx={{ bgcolor: "primary.main", width: 40, height: 40 }}>
-            {user?.username?.charAt(0).toUpperCase() ?? "U"}
+            {userProfile?.avatarUrl ? (
+              <img
+                src={userProfile.avatarUrl}
+                alt={userProfile.name}
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
+            ) : (
+              (userProfile?.name || user?.username || "U").charAt(0).toUpperCase()
+            )}
           </Avatar>
           <Box>
             <Typography variant="subtitle1" noWrap>
-              {user?.username ?? userProfile?.name ?? "User"}
+              {userProfile?.name || user?.username || "User"}
             </Typography>
             <Typography variant="caption" color="text.secondary" noWrap>
               {userProfile?.role || "Role"}

@@ -1,12 +1,27 @@
 import type { DashboardData, CourseAttendanceRecord, UserProfile } from './types'
 
+export const userProfile: UserProfile = {
+  id: '2026-0001',
+  name: 'Jane Doe',
+  role: 'Student',
+  email: 'jane.doe@email.com',
+  phone: '+1 (555) 123-4567',
+  department: 'Computer Science',
+  program: 'B.Sc. Computer Science',
+  semester: '3',
+  status: 'Active',
+  campus: 'Main Campus',
+  address: '123 University Ave, City, Country',
+  avatarUrl: 'https://ui-avatars.com/api/?name=Jane+Doe&background=1e88e5&color=fff',
+}
+
 export const dashboardData: DashboardData = {
   student: {
-    name: 'Jane Doe',
-    registration: '2026-0001',
-    program: 'B.Sc. Computer Science',
-    semester: 3,
-    status: 'Active',
+    name: userProfile.name,
+    registration: userProfile.id,
+    program: userProfile.program!,
+    semester: Number(userProfile.semester),
+    status: userProfile.status!,
   },
   courses: [
     { name: 'Intro to Programming', code: 'CS101', credits: 3, status: 'Enrolled' },
@@ -99,18 +114,3 @@ export const attendanceRecords: CourseAttendanceRecord[] = [
     finalAttendance: '0%',
   },
 ]
-
-export const userProfile: UserProfile = {
-  id: '2026-0001',
-  name: 'Jane Doe',
-  role: 'Student',
-  email: 'jane.doe@email.com',
-  phone: '+1 (555) 123-4567',
-  department: 'Computer Science',
-  program: 'B.Sc. Computer Science',
-  semester: '3',
-  status: 'Active',
-  campus: 'Main Campus',
-  address: '123 University Ave, City, Country',
-  avatarUrl: 'https://ui-avatars.com/api/?name=Jane+Doe&background=1e88e5&color=fff',
-}

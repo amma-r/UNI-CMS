@@ -4,6 +4,8 @@
     box-sizing: border-box;
 }
 
-h4{
-    font-family:monospace !important;
+body {
+    font-family: 'Outfit', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
