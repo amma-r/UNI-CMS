@@ -15,7 +15,7 @@ import SchoolIcon from "@mui/icons-material/School";
 import BadgeIcon from "@mui/icons-material/Badge";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { getUserProfile } from "../services/mockApi";
-import type { UserProfile } from "../data/mockData";
+import type { UserProfile } from "../data/types";
 import PageHeader from "../components/PageHeader";
 import Loader from "../components/Loader";
 

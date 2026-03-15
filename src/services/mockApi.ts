@@ -1,7 +1,5 @@
 import { dashboardData, attendanceRecords, userProfile } from '../data/mockData'
-import type { DashboardData } from '../pages/dashboard/types'
-import type { CourseAttendanceRecord } from '../pages/attendance/types'
-import type { UserProfile } from '../data/mockData'
+import type { DashboardData, CourseAttendanceRecord, UserProfile } from '../data/types'
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 

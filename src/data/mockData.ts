@@ -1,5 +1,4 @@
-import type { DashboardData } from '../pages/dashboard/types'
-import type { CourseAttendanceRecord } from '../pages/attendance/types'
+import type { DashboardData, CourseAttendanceRecord, UserProfile } from './types'
 
 export const dashboardData: DashboardData = {
   student: {
@@ -100,21 +99,6 @@ export const attendanceRecords: CourseAttendanceRecord[] = [
     finalAttendance: '0%',
   },
 ]
-
-export type UserProfile = {
-  id: string
-  name: string
-  role: 'Student' | 'Faculty'
-  email: string
-  phone?: string
-  department?: string
-  program?: string
-  semester?: string
-  status?: string
-  campus?: string
-  address?: string
-  avatarUrl?: string
-}
 
 export const userProfile: UserProfile = {
   id: '2026-0001',
