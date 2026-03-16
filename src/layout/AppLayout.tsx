@@ -9,9 +9,11 @@ import Sidebar, { drawerWidth } from "./Sidebar";
 export default function AppLayout() {
   const location = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [desktopOpen, setDesktopOpen] = useState(true);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prev) => !prev);
+    setDesktopOpen((prev) => !prev);
   };
 
   return (
@@ -20,7 +22,8 @@ export default function AppLayout() {
       <Header onMenuClick={handleDrawerToggle} />
       <Sidebar
         mobileOpen={mobileOpen}
-        onMobileClose={handleDrawerToggle}
+        onMobileClose={() => setMobileOpen(false)}
+        desktopOpen={desktopOpen}
         currentPath={location.pathname}
       />
 
@@ -30,7 +33,8 @@ export default function AppLayout() {
           backgroundColor: (theme) => theme.palette.background.default,
           flexGrow: 1,
           p: 3,
-          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          width: { sm: `calc(100% - ${desktopOpen ? drawerWidth : 65}px)` },
+          transition: "width 0.2s",
           overflow: "auto",
         }}
       >

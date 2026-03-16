@@ -8,6 +8,7 @@ import type { TeacherDashboardData } from "../../data/types";
 import { getTeacherDashboardData } from "../../services/mockApi";
 import Loader from "../../components/Loader";
 import PageHeader from "../../components/PageHeader";
+import SectionCard from "../../components/SectionCard";
 
 export default function TeacherDashboard() {
   const [data, setData] = useState<TeacherDashboardData | null>(null);
@@ -23,17 +24,15 @@ export default function TeacherDashboard() {
   return (
     <Box sx={{ display: "grid", gap: 3 }}>
       <PageHeader title="Teacher Dashboard" />
-      
-      <Card sx={{ bgcolor: "primary.light", color: "primary.contrastText" }}>
-        <CardContent>
-          <Typography variant="h5" gutterBottom>
-            Welcome, {data.teacher.name}
-          </Typography>
-          <Typography variant="body1">
-            Department: {data.teacher.department} | ID: {data.teacher.id}
-          </Typography>
-        </CardContent>
-      </Card>
+
+      <SectionCard title="Welcome">
+        <Typography variant="h5" gutterBottom>
+          Welcome, {data.teacher.name}
+        </Typography>
+        <Typography variant="body1">
+          Department: {data.teacher.department} | ID: {data.teacher.id}
+        </Typography>
+      </SectionCard>
 
       <Typography variant="h6" sx={{ mt: 2 }}>
         Today's Classes
