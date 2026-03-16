@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
-import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
@@ -15,9 +14,10 @@ import SchoolIcon from "@mui/icons-material/School";
 import BadgeIcon from "@mui/icons-material/Badge";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { getUserProfile } from "../services/mockApi";
-import type { UserProfile } from "../data/mockData";
+import type { UserProfile } from "../data/types";
 import PageHeader from "../components/PageHeader";
 import Loader from "../components/Loader";
+import SectionCard from "../components/SectionCard";
 
 export default function Profile() {
   const [user, setUser] = useState<UserProfile | null>(null);
@@ -33,7 +33,7 @@ export default function Profile() {
   return (
     <Box sx={{ display: "grid", gap: 2 }}>
       <PageHeader title="Profile" />{" "}
-      <Paper sx={{ width: "70%", p: 3, borderRadius: 2 }} elevation={2}>
+      <SectionCard title="Profile">
         <Grid container spacing={3} alignItems="center">
           <Grid>
             <Box
@@ -156,7 +156,7 @@ export default function Profile() {
             </Typography>
           </Grid>
         </Grid>
-      </Paper>
+      </SectionCard>
     </Box>
   );
 }

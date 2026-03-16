@@ -11,13 +11,13 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import Toolbar from "@mui/material/Toolbar";
 import LogoutIcon from "@mui/icons-material/Logout";
-import MenuIcon from "@mui/icons-material/Menu";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { Person } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { getUserProfile } from "../services/mockApi";
 import { useEffect, useState } from "react";
+import { useAuth } from "../context/AuthContext";
 
 import SettingsIcon from "@mui/icons-material/Settings";
 
@@ -60,6 +60,7 @@ export default function Sidebar({
   const [userProfile, setUserProfile] = useState<{
     name: string;
     role: string;
+    avatarUrl?: string;
   } | null>(null);
 
   useEffect(() => {
@@ -69,6 +70,7 @@ export default function Sidebar({
   }, []);
 
   const navigate = useNavigate();
+  const { logout, user } = useAuth();
   const drawer = (
     <Box sx={{ height: "100%", display: "flex", flexDirection: "column" }}>
       <Toolbar sx={{ minHeight: (theme) => theme.mixins.toolbar.minHeight }} />
@@ -84,16 +86,21 @@ export default function Sidebar({
       >
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
           <Avatar sx={{ bgcolor: "primary.main", width: 40, height: 40 }}>
-            A
+            {userProfile?.avatarUrl ? (
+              <img
+                src={userProfile.avatarUrl}
+                alt={userProfile.name}
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
+            ) : (
+              (userProfile?.name || user?.username || "U").charAt(0).toUpperCase()
+            )}
           </Avatar>
           <Box>
             <Typography variant="subtitle1" noWrap>
-              {/* {userProfile?.name} */}
-              {userProfile?.name || "User Name"}
+              {userProfile?.name || user?.username || "User"}
             </Typography>
             <Typography variant="caption" color="text.secondary" noWrap>
-              {/* {role} */}
-              {/* Admin / Student / Teacher */}
               {userProfile?.role || "Role"}
             </Typography>
           </Box>
@@ -129,9 +136,8 @@ export default function Sidebar({
         <IconButton
           color="inherit"
           onClick={() => {
-            // TODO: plug in real logout flow
-            console.log("logout");
-            navigate("/auth/login");
+            logout();
+            navigate("/auth/login", { replace: true });
           }}
           sx={{ width: "100%", justifyContent: "flex-start" }}
         >

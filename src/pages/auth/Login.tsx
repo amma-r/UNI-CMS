@@ -1,22 +1,36 @@
 import { useState } from "react";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Button, Typography, Alert, IconButton, InputAdornment } from "@mui/material";
 import SectionCard from "../../components/SectionCard";
 import TextField from "@mui/material/TextField";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 export default function Login() {
   const navigate = useNavigate();
+  const { login, user } = useAuth();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
+  // If already logged in, skip the login page
+  if (user) {
+    return <Navigate to="/dashboard" replace />;
+  }
 
   const handleLogin = () => {
     if (!username || !password) {
-      //   alert("Please enter both username and password.");
+      setError("Please enter both username and password.");
       return;
     }
-    // Replace with your actual login logic (API call, auth service, etc.)
-    console.log("Logging in with:", { username, password });
-    navigate("/dashboard"); // Redirect to dashboard after successful login
+    const success = login(username, password);
+    if (success) {
+      navigate("/dashboard");
+    } else {
+      setError("Invalid username or password. Please try again.");
+    }
   };
 
   return (
@@ -47,21 +61,45 @@ export default function Login() {
           justifyContent: "center",
         }}
       >
-        <SectionCard title="Login">
+        <SectionCard width="70%" title="Login">
+          {error && (
+            <Alert severity="error" sx={{ mb: 1 }}>
+              {error}
+            </Alert>
+          )}
           <TextField
             label="Username"
             fullWidth
             margin="normal"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => {
+              setUsername(e.target.value);
+              setError("");
+            }}
           />
           <TextField
             label="Password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             fullWidth
             margin="normal"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => {
+              setPassword(e.target.value);
+              setError("");
+            }}
+            onKeyDown={(e) => e.key === "Enter" && handleLogin()}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
           <Button
             variant="contained"
@@ -72,6 +110,14 @@ export default function Login() {
           >
             Login
           </Button>
+          <Typography
+            variant="body2"
+            align="center"
+            sx={{ mt: 2, cursor: "pointer", color: "primary.main" }}
+            onClick={() => navigate("/auth/forgot-password")}
+          >
+            Forgot Password?
+          </Typography>
         </SectionCard>
       </Box>
     </Box>
