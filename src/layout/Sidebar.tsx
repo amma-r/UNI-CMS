@@ -49,12 +49,14 @@ const navItems = [
 type SidebarProps = {
   mobileOpen: boolean;
   onMobileClose: () => void;
+  desktopOpen: boolean;
   currentPath: string;
 };
 
 export default function Sidebar({
   mobileOpen,
   onMobileClose,
+  desktopOpen,
   currentPath,
 }: SidebarProps) {
   const [userProfile, setUserProfile] = useState<{
@@ -77,11 +79,12 @@ export default function Sidebar({
 
       <Box
         sx={{
-          px: 2,
+          px: desktopOpen ? 2 : 1.5,
           py: 2,
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-between",
+          justifyContent: desktopOpen ? "space-between" : "center",
+          flexDirection: desktopOpen ? "row" : "column",
         }}
       >
         <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
@@ -96,17 +99,17 @@ export default function Sidebar({
               (userProfile?.name || user?.username || "U").charAt(0).toUpperCase()
             )}
           </Avatar>
-          <Box>
-            <Typography variant="subtitle1" noWrap>
-              {userProfile?.name || user?.username || "User"}
-            </Typography>
-            <Typography variant="caption" color="text.secondary" noWrap>
-              {userProfile?.role || "Role"}
-            </Typography>
-          </Box>
+          {desktopOpen && (
+            <Box>
+              <Typography variant="subtitle1" noWrap>
+                {userProfile?.name || user?.username || "User"}
+              </Typography>
+              <Typography variant="caption" color="text.secondary" noWrap>
+                {userProfile?.role || "Role"}
+              </Typography>
+            </Box>
+          )}
         </Box>
-
-
       </Box>
 
       <Divider />
@@ -121,10 +124,21 @@ export default function Sidebar({
               key={item.path}
               selected={selected}
               onClick={onMobileClose}
-              sx={{ px: 2 }}
+              sx={{
+                px: desktopOpen ? 2 : "auto",
+                justifyContent: desktopOpen ? "initial" : "center",
+              }}
             >
-              <ListItemIcon sx={{ minWidth: 40 }}>{item.icon}</ListItemIcon>
-              <ListItemText primary={item.label} />
+              <ListItemIcon
+                sx={{
+                  minWidth: desktopOpen ? 40 : 0,
+                  mr: desktopOpen ? 0 : "auto",
+                  justifyContent: "center",
+                }}
+              >
+                {item.icon}
+              </ListItemIcon>
+              {desktopOpen && <ListItemText primary={item.label} />}
             </ListItemButton>
           );
         })}
@@ -132,17 +146,17 @@ export default function Sidebar({
 
       <Divider />
 
-      <Box sx={{ p: 2 }}>
+      <Box sx={{ p: desktopOpen ? 2 : 1 }}>
         <IconButton
           color="inherit"
           onClick={() => {
             logout();
             navigate("/auth/login", { replace: true });
           }}
-          sx={{ width: "100%", justifyContent: "flex-start" }}
+          sx={{ width: "100%", justifyContent: desktopOpen ? "flex-start" : "center" }}
         >
-          <LogoutIcon sx={{ mr: 1 }} />
-          <Typography variant="body2">Logout</Typography>
+          <LogoutIcon sx={{ mr: desktopOpen ? 1 : 0 }} />
+          {desktopOpen && <Typography variant="body2">Logout</Typography>}
         </IconButton>
       </Box>
     </Box>
@@ -151,7 +165,11 @@ export default function Sidebar({
   return (
     <Box
       component="nav"
-      sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }}
+      sx={{
+        width: { sm: desktopOpen ? drawerWidth : 65 },
+        flexShrink: { sm: 0 },
+        transition: "width 0.2s",
+      }}
       aria-label="main navigation"
     >
       <Drawer
@@ -169,10 +187,15 @@ export default function Sidebar({
 
       <Drawer
         variant="permanent"
-        open
+        open={desktopOpen}
         sx={{
           display: { xs: "none", sm: "block" },
-          "& .MuiDrawer-paper": { boxSizing: "border-box", width: drawerWidth },
+          "& .MuiDrawer-paper": {
+            boxSizing: "border-box",
+            width: desktopOpen ? drawerWidth : 65,
+            transition: "width 0.2s",
+            overflowX: "hidden",
+          },
         }}
       >
         {drawer}
