@@ -3,11 +3,15 @@ import type { ReactNode } from "react";
 
 
 // ─── Mock credentials ───────────────────────────────────────────────────────
-const MOCK_USERS = [{ username: "admin", password: "password123" }];
+const MOCK_USERS = [
+  { username: "admin", password: "password123", role: "admin" },
+  { username: "teacher", password: "password123", role: "teacher" }
+];
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 interface AuthUser {
   username: string;
+  role: string;
 }
 
 interface AuthContextType {
@@ -37,7 +41,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       (u) => u.username === username && u.password === password
     );
     if (match) {
-      const authUser: AuthUser = { username: match.username };
+      const authUser: AuthUser = { username: match.username, role: match.role };
       setUser(authUser);
       localStorage.setItem("cms_user", JSON.stringify(authUser));
       return true;

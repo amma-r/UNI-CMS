@@ -1,4 +1,4 @@
-import type { DashboardData, CourseAttendanceRecord, UserProfile } from './types'
+import type { DashboardData, CourseAttendanceRecord, UserProfile, TeacherDashboardData, TeacherBatch, StudentAttendanceForm } from './types'
 
 export const userProfile: UserProfile = {
   id: '2026-0001',
@@ -113,4 +113,30 @@ export const attendanceRecords: CourseAttendanceRecord[] = [
     percentage: 0,
     finalAttendance: '0%',
   },
+]
+
+export const teacherDashboardData: TeacherDashboardData = {
+  teacher: {
+    name: 'Prof. John Smith',
+    id: 'T-1001',
+    department: 'Computer Science',
+  },
+  todayClasses: [
+    { time: '09:00 AM - 10:30 AM', courseName: 'Data Structures', batch: 'BSCS-2A', room: 'Room 301' },
+    { time: '11:00 AM - 12:30 PM', courseName: 'Algorithms', batch: 'BSCS-3B', room: 'Lab 2' },
+  ],
+}
+
+export const teacherBatches: TeacherBatch[] = [
+  { id: 'b1', courseName: 'Data Structures', courseCode: 'CS201', batchName: 'BSCS-2A' },
+  { id: 'b2', courseName: 'Algorithms', courseCode: 'CS301', batchName: 'BSCS-3B' },
+  { id: 'b3', courseName: 'Database Systems', courseCode: 'CS401', batchName: 'BSCS-4A' },
+]
+
+export const studentAttendanceList: StudentAttendanceForm[] = [
+  { id: 's1', name: 'Alice Johnson', registration: '2026-0010', isPresent: true },
+  { id: 's2', name: 'Bob Smith', registration: '2026-0011', isPresent: true },
+  { id: 's3', name: 'Charlie Brown', registration: '2026-0012', isPresent: false },
+  { id: 's4', name: 'Diana Prince', registration: '2026-0013', isPresent: true },
+  { id: 's5', name: 'Evan Wright', registration: '2026-0014', isPresent: true },
 ]

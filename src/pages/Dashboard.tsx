@@ -9,13 +9,22 @@ import PageHeader from "../components/PageHeader";
 import { getDashboardData } from "../services/mockApi";
 import Loader from "../components/Loader";
 import { BarChart } from "@mui/x-charts/BarChart";
+import { useAuth } from "../context/AuthContext";
+import TeacherDashboard from "./dashboard/TeacherDashboard";
 
 export default function Dashboard() {
+  const { user } = useAuth();
   const [data, setData] = useState<DashboardData | null>(null);
 
   useEffect(() => {
-    getDashboardData().then(setData);
-  }, []);
+    if (user?.role !== "teacher") {
+      getDashboardData().then(setData);
+    }
+  }, [user]);
+
+  if (user?.role === "teacher") {
+    return <TeacherDashboard />;
+  }
 
   if (!data) {
     return <Loader />;
@@ -25,6 +34,7 @@ export default function Dashboard() {
     <Box sx={{ display: "grid", gap: 2 }}>
       <PageHeader title="Dashboard" />
       <Box sx={{ display: "grid", gap: 2, gridTemplateColumns: "1fr 1fr" }}>
+
         <SectionCard title="Student Overview">
           <StudentOverview student={data.student} />
         </SectionCard>

@@ -26,6 +26,20 @@ export type DashboardData = {
   ledger: LedgerEntry[];
 };
 
+export type TeacherDashboardData = {
+  teacher: {
+    name: string;
+    id: string;
+    department: string;
+  };
+  todayClasses: {
+    time: string;
+    courseName: string;
+    batch: string;
+    room: string;
+  }[];
+};
+
 export type CourseAttendanceRecord = {
   id: string;
   courseName: string;
@@ -41,7 +55,7 @@ export type CourseAttendanceRecord = {
 export type UserProfile = {
   id: string;
   name: string;
-  role: "Student" | "Faculty";
+  role: "Student" | "Faculty" | "admin" | "teacher";
   email: string;
   phone?: string;
   department?: string;
@@ -51,4 +65,18 @@ export type UserProfile = {
   campus?: string;
   address?: string;
   avatarUrl?: string;
+};
+
+export type TeacherBatch = {
+  id: string;
+  courseName: string;
+  courseCode: string;
+  batchName: string;
+};
+
+export type StudentAttendanceForm = {
+  id: string;
+  name: string;
+  registration: string;
+  isPresent: boolean;
 };
